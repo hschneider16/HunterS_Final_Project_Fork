@@ -15,15 +15,13 @@ def checkout_submit(request):
         first_name = request.POST.get('myFName')
         last_name = request.POST.get('myLName')
         credit_card = request.POST.get('myCreditCard')
-        # Get other form fields as needed
 
-        # Write the data to a .txt file
+        # txt file output
         with open('checkout_data.txt', 'a') as file:
             file.write(f"Name: {first_name} {last_name}\n")
             file.write(f"Credit Card: {credit_card}\n")
-            # Write other fields as needed
             file.write('\n')
 
-        return render(request, 'checkout_success.html')  # Render a success page
+        return render(request, 'checkout_success.html')
     else:
-        return render(request, 'checkout.html')  # Render the checkout page
+        return render(request, 'checkout.html')
