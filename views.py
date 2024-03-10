@@ -1,5 +1,6 @@
 import csv
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 def menu(request):
     with open('menu.csv', 'r') as file:
@@ -7,3 +8,22 @@ def menu(request):
         data = list(csv_data)
     
     return render(request, 'menu.html', {'data': data})
+
+@csrf_exempt
+def checkout_submit(request):
+    if request.method == 'POST':
+        first_name = request.POST.get('myFName')
+        last_name = request.POST.get('myLName')
+        credit_card = request.POST.get('myCreditCard')
+        # Get other form fields as needed
+
+        # Write the data to a .txt file
+        with open('checkout_data.txt', 'a') as file:
+            file.write(f"Name: {first_name} {last_name}\n")
+            file.write(f"Credit Card: {credit_card}\n")
+            # Write other fields as needed
+            file.write('\n')
+
+        return render(request, 'checkout_success.html')  # Render a success page
+    else:
+        return render(request, 'checkout.html')  # Render the checkout page
